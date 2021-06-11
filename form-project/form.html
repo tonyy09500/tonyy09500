@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表單</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app"> 
+        <div style="text-align:center">
+            <div class="agroup">
+                <label for="username">用戶名：</label>
+                <input v-model="username" type="text" id="username" placeholder="輸入您的用戶名" required/>
+            </div>
+            <br>
+            <div class="agroup">
+                <label for="userage">年紀：</label>&emsp;
+                <input v-model="userage" type="text" id="userage" placeholder="輸入您的年紀" />
+            </div>
+            <br>
+            <div class="agroup">
+                <input type="button" value="加入" class="btn btn-primary" @click="add"
+                       :disabled='username.length===0 || userage.length===0'>&emsp;
+                <input type="reset" value="重置" class="btn btn-danger">
+            </div>
+        </div> 
+        <table class="table table-bordered table-hover">
+            <tr style="text-align:center" >用戶表</tr>
+            <tr class="text-danger">
+                <th class="text-center">序號</th>
+                <th class="text-center">用戶名</th>
+                <th class="text-center">年龄</th>
+                <th class="text-center">刪除</th>
+            </tr>
+            <tr class="text-center" v-for="(item,index) in userData">
+                <td>{{index+1}}</td>
+                <td>{{item.username}}</td>
+                <td>{{item.userage}}</td>
+                <td>
+                <button class="btn btn-primary btn-sm" @click="remove(index)">
+                        删除
+                </button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right">
+                    <button class="btn btn-danger btn-sm" @click="claerall" v-if="userData.length !=0">
+                        删除全部
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                    return {
+                    username: '',
+                    userage: '',
+                    userData: [
+                        {
+                            username: 'test1',
+                            userage: 23
+                        },
+                        {
+                            username: 'test2',
+                            userage: 24
+                        }
+                    ]
+                }
+            },
+            methods: {
+                remove: function (index) {
+                this.userData.splice(index, 1);
+            },
+                add: function(){
+                    this.userData.push({
+                    username: this.username,
+                    userage: this.userage
+                     });
+                },
+                claerall: function(){
+                    this.userData=[];
+                }
+            }
+                
+        });
+        app.mount('#app');
+    </script>
+</body>
+</html>
+  
